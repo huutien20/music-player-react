@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './SongItem.module.scss';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '~/AppContext/AppContext';
 
@@ -14,6 +14,7 @@ function SongItem({ song, isSearch }) {
     const navigate = useNavigate();
     const context = useContext(AppContext);
     const { songList, currentSong, setCurrentSong, setIsPlaying, isFavorite } = context;
+    const songRef = useRef();
 
     useEffect(() => {
         const favoriteSongList = JSON.parse(localStorage.getItem('favoriteList'));
@@ -49,30 +50,22 @@ function SongItem({ song, isSearch }) {
             }
         }
     };
-    useEffect(() => {
-        const songActive = document.querySelector(`.${cx('song')}.${cx('active')}`);
-        if (songActive) {
-            setTimeout(() => {
-                songActive.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center',
-                });
-            }, 500);
-        }
-    }, [currentSong.id]);
-    useEffect(() => {
-        const songActive = document.querySelector(`.${cx('song')}.${cx('active')}`);
-        if (songActive && currentSong) {
-            setTimeout(() => {
-                songActive.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center',
-                });
-            }, 500);
-        }
-    }, [currentSong]);
+    // useEffect(() => {
+    //     const songActive = document.querySelector(`.${cx('song')}.${cx('active')}`);
+    //     if (songActive) {
+    //         setTimeout(() => {
+    //             songActive.scrollIntoView({
+    //                 behavior: 'smooth',
+    //                 block: 'center',
+    //             });
+    //         }, 500);
+    //     }
+    // }, [currentSong?.id]);
+    // console.log([songRef.current]);
+
     return (
         <div
+            ref={songRef}
             className={cx('song', {
                 active: song.id === currentSong.id,
             })}

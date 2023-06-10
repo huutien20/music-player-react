@@ -23,10 +23,9 @@ function SongItem({ song, isSearch }) {
         }
     }, [song.id]);
 
-    const handleSongClick = (target, song) => {
-        const songNode = target.closest(`.${cx('song')}:not(.${cx('active')})`);
-
-        if (target.closest(`.${cx('option')}`)) {
+    const handleSongClick = (e, song) => {
+        const songNode = songRef.current;
+        if (e.target.closest(`.${cx('option')}`)) {
             setIsFavoriteSong(!isFavoriteSong);
             const favoriteSongList = JSON.parse(localStorage.getItem('favoriteList'));
             if (favoriteSongList) {
@@ -41,27 +40,22 @@ function SongItem({ song, isSearch }) {
             } else {
                 localStorage.setItem('favoriteList', JSON.stringify([song]));
             }
-        } else {
-            if (songNode) {
-                const detailSong = isFavorite ? songList.find((s) => s.id === song.id) : song;
-                setCurrentSong(detailSong);
-                setIsPlaying(true);
-                navigate(`dashboard/${song.id}`);
-            }
+        } else if (songNode && !songNode.classList.contains(cx('active'))) {
+            const detailSong = isFavorite ? songList.find((s) => s.id === song.id) : song;
+            setCurrentSong(detailSong);
+            setIsPlaying(true);
+            navigate(`dashboard/${song.id}`);
         }
     };
-    // useEffect(() => {
-    //     const songActive = document.querySelector(`.${cx('song')}.${cx('active')}`);
-    //     if (songActive) {
-    //         setTimeout(() => {
-    //             songActive.scrollIntoView({
-    //                 behavior: 'smooth',
-    //                 block: 'center',
-    //             });
-    //         }, 500);
-    //     }
-    // }, [currentSong?.id]);
-    // console.log([songRef.current]);
+
+    useEffect(() => {
+        if (songRef.current && songRef.current.classList.contains(cx('active'))) {
+            songRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }
+    }, [currentSong?.id]);
 
     return (
         <div

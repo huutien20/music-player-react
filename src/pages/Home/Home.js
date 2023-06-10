@@ -20,31 +20,34 @@ function Home() {
 
     // getSongList
     useEffect(() => {
-        var songList = [];
-        if (isFavorite) {
-            songList = JSON.parse(localStorage.getItem('favoriteList'));
-            if (songList) {
-                songList = songList.map((song, index) => {
-                    return {
-                        ...song,
-                        index: index,
-                    };
-                });
-                setSongList(songList);
+        const loadSongList = async () => {
+            let songList = [];
+
+            if (isFavorite) {
+                const favoriteList = JSON.parse(localStorage.getItem('favoriteList')) || [];
+                songList = favoriteList.map((song, index) => ({
+                    ...song,
+                    index,
+                    isFavorite: true,
+                }));
             } else {
-                setSongList([]);
-            }
-        } else {
-            songList = JSON.parse(localStorage.getItem('songList'));
-            if (songList) {
-                setSongList(songList);
-            } else {
-                const apiGetSongList = async () => {
+                songList = JSON.parse(localStorage.getItem('songList'));
+                const favoriteList = JSON.parse(localStorage.getItem('favoriteList'));
+
+                if (songList) {
+                    songList = songList.map((song) => {
+                        return {
+                            ...song,
+                            isFavorite:
+                                favoriteList && !!favoriteList.find((favoriteSong) => favoriteSong.id === song.id),
+                        };
+                    });
+                } else {
                     try {
                         const res = await axios.get('https://api-zingmp3-vercel.vercel.app/api/charthome');
                         const listId = res.data.data.RTChart.items;
 
-                        const songPromises = listId.map((item) => {
+                        const songPromises = listId.map(async (item) => {
                             try {
                                 const song = {
                                     id: item.encodeId,
@@ -52,41 +55,45 @@ function Home() {
                                     artistsNames: item.artistsNames,
                                     thumbnail: item.thumbnail,
                                     thumbnailM: item.thumbnailM,
+                                    isFavorite:
+                                        favoriteList &&
+                                        !!favoriteList.find((favoriteSong) => favoriteSong.id === item.encodeId),
                                 };
-                                return axios
-                                    .get(`https://api-zingmp3-vercel.vercel.app/api/song`, {
-                                        params: {
-                                            id: item.encodeId,
-                                        },
-                                    })
-                                    .then((res) => {
-                                        const data = res.data.data;
-                                        if (data) {
-                                            return { ...song, url: data[128] };
-                                        }
-                                        return null;
-                                    });
+
+                                const songRes = await axios.get(`https://api-zingmp3-vercel.vercel.app/api/song`, {
+                                    params: { id: item.encodeId },
+                                });
+
+                                const data = songRes.data.data;
+                                if (data) {
+                                    return { ...song, url: data[128] };
+                                }
+
+                                return null;
                             } catch (error) {
                                 return null;
                             }
                         });
+
                         const songs = await Promise.all(songPromises);
-                        const filteredListSongs = songs.filter((song) => song !== null);
-                        const listSongs = filteredListSongs.map((song, index) => {
-                            return {
-                                ...song,
-                                index: index,
-                            };
-                        });
-                        setSongList(listSongs);
-                        localStorage.setItem('songList', JSON.stringify(listSongs));
+                        const filteredSongs = songs.filter((song) => song !== null);
+
+                        songList = filteredSongs.map((song, index) => ({
+                            ...song,
+                            index,
+                        }));
+
+                        localStorage.setItem('songList', JSON.stringify(songList));
                     } catch (error) {
                         console.log(error);
                     }
-                };
-                apiGetSongList();
+                }
             }
-        }
+
+            setSongList(songList);
+        };
+
+        loadSongList();
     }, [isFavorite, setSongList]);
 
     useEffect(() => {

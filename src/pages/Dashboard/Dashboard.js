@@ -2,9 +2,19 @@ import classNames from 'classnames/bind';
 import styles from './Dashboard.module.scss';
 import CD from '~/components/CD/CD';
 import Progress from '~/components/Progress/Progress';
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { AppContext } from '~/AppContext/AppContext';
-import { FaArrowLeft, FaBars, FaHeart, FaPause, FaPlay, FaRandom, FaStepBackward, FaStepForward } from 'react-icons/fa';
+import {
+    FaArrowLeft,
+    FaBars,
+    FaHeart,
+    FaPause,
+    FaPlay,
+    FaRandom,
+    FaRegHeart,
+    FaStepBackward,
+    FaStepForward,
+} from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRepeat } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +23,7 @@ const cx = classNames.bind(styles);
 
 function Dashboard({ handleProgressChange, getTime }) {
     console.log('dashboard');
+
     const context = useContext(AppContext);
     const {
         songList,
@@ -26,6 +37,7 @@ function Dashboard({ handleProgressChange, getTime }) {
         setIsRandom,
         setIsRepeat,
     } = context;
+    const [isFavoriteSong, setIsFavoriteSong] = useState(currentSong.isFavorite);
 
     const navigate = useNavigate();
     const cdRef = useRef();
@@ -66,6 +78,23 @@ function Dashboard({ handleProgressChange, getTime }) {
         setIsPlaying(!isPlaying);
     };
 
+    const handleClickHeart = () => {
+        setIsFavoriteSong(!isFavoriteSong);
+        const favoriteSongList = JSON.parse(localStorage.getItem('favoriteList')) || [];
+
+        const isSongInFavoriteList = favoriteSongList.some((favoriteSong) => favoriteSong.id === currentSong.id);
+
+        if (isSongInFavoriteList) {
+            songList[currentSong.index].isFavorite = false;
+            const updatedFavoriteList = favoriteSongList.filter((favoriteSong) => favoriteSong.id !== currentSong.id);
+            localStorage.setItem('favoriteList', JSON.stringify(updatedFavoriteList));
+        } else {
+            songList[currentSong.index].isFavorite = true;
+            favoriteSongList.push(currentSong);
+            localStorage.setItem('favoriteList', JSON.stringify(favoriteSongList));
+        }
+    };
+
     return (
         <div className={cx('dashboard')}>
             <div className={cx('header')}>
@@ -98,6 +127,13 @@ function Dashboard({ handleProgressChange, getTime }) {
                     onClick={() => setIsRepeat(!isRepeat)}
                 >
                     <FontAwesomeIcon icon={faRepeat} />
+                </div>
+                <div className={cx('heart-btn')} onClick={handleClickHeart}>
+                    {isFavoriteSong ? (
+                        <FaHeart className={cx('heart-active-icon')} />
+                    ) : (
+                        <FaRegHeart className={cx('heart-icon')} />
+                    )}
                 </div>
                 <div
                     className={cx('btn', {

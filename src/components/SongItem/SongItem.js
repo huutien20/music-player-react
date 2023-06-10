@@ -8,60 +8,51 @@ import { AppContext } from '~/AppContext/AppContext';
 const cx = classNames.bind(styles);
 
 function SongItem({ song, isSearch }) {
+    console.log(song);
     console.log('song item');
-    const [isFavoriteSong, setIsFavoriteSong] = useState(false);
+    const [isFavoriteSong, setIsFavoriteSong] = useState(song.isFavorite);
 
     const navigate = useNavigate();
     const context = useContext(AppContext);
     const { songList, currentSong, setCurrentSong, setIsPlaying, isFavorite } = context;
     const songRef = useRef();
 
-    useEffect(() => {
-        const favoriteSongList = JSON.parse(localStorage.getItem('favoriteList'));
-        if (favoriteSongList) {
-            setIsFavoriteSong(!!favoriteSongList.find((favoriteSong) => song.id === favoriteSong.id));
-        }
-    }, [song.id]);
+    const handleSongClick = (e, song) => {
+        const isOptionClicked = e.target.closest(`.${cx('option')}`);
+        const isSongActive = songRef.current.classList.contains(cx('active'));
 
-    const handleSongClick = (target, song) => {
-        const songNode = target.closest(`.${cx('song')}:not(.${cx('active')})`);
+        if (isOptionClicked) {
+            console.log('set favorite');
+            setIsFavoriteSong((prev) => !prev);
+            const favoriteSongList = JSON.parse(localStorage.getItem('favoriteList')) || [];
 
-        if (target.closest(`.${cx('option')}`)) {
-            setIsFavoriteSong(!isFavoriteSong);
-            const favoriteSongList = JSON.parse(localStorage.getItem('favoriteList'));
-            if (favoriteSongList) {
-                const check = favoriteSongList.find((favoriteSong) => favoriteSong.id === song.id);
-                if (check) {
-                    const result = favoriteSongList.filter((favoriteSong) => favoriteSong.id !== song.id);
-                    localStorage.setItem('favoriteList', JSON.stringify(result));
-                } else {
-                    favoriteSongList.push(song);
-                    localStorage.setItem('favoriteList', JSON.stringify(favoriteSongList));
-                }
+            const isSongInFavoriteList = favoriteSongList.some((favoriteSong) => favoriteSong.id === song.id);
+
+            if (isSongInFavoriteList) {
+                songList[song.index].isFavorite = false;
+                const updatedFavoriteList = favoriteSongList.filter((favoriteSong) => favoriteSong.id !== song.id);
+                localStorage.setItem('favoriteList', JSON.stringify(updatedFavoriteList));
             } else {
-                localStorage.setItem('favoriteList', JSON.stringify([song]));
+                songList[song.index].isFavorite = true;
+                favoriteSongList.push(song);
+                localStorage.setItem('favoriteList', JSON.stringify(favoriteSongList));
             }
-        } else {
-            if (songNode) {
-                const detailSong = isFavorite ? songList.find((s) => s.id === song.id) : song;
-                setCurrentSong(detailSong);
-                setIsPlaying(true);
-                navigate(`dashboard/${song.id}`);
-            }
+        } else if (songRef.current && !isSongActive) {
+            const detailSong = isFavorite ? songList.find((s) => s.id === song.id) : song;
+            setCurrentSong(detailSong);
+            setIsPlaying(true);
+            navigate(`dashboard/${song.id}`);
         }
     };
-    // useEffect(() => {
-    //     const songActive = document.querySelector(`.${cx('song')}.${cx('active')}`);
-    //     if (songActive) {
-    //         setTimeout(() => {
-    //             songActive.scrollIntoView({
-    //                 behavior: 'smooth',
-    //                 block: 'center',
-    //             });
-    //         }, 500);
-    //     }
-    // }, [currentSong?.id]);
-    // console.log([songRef.current]);
+
+    useEffect(() => {
+        if (songRef.current && songRef.current.classList.contains(cx('active'))) {
+            songRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+            });
+        }
+    }, [currentSong?.id]);
 
     return (
         <div
@@ -69,7 +60,7 @@ function SongItem({ song, isSearch }) {
             className={cx('song', {
                 active: song.id === currentSong.id,
             })}
-            onClick={(e) => handleSongClick(e.target, song)}
+            onClick={(e) => handleSongClick(e, song)}
         >
             <div className={cx('thumb')} style={{ backgroundImage: `url(${song.thumbnail})` }}></div>
             <div className={cx('body')}>

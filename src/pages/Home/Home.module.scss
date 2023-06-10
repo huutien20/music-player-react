@@ -1,0 +1,78 @@
+.playlist {
+    position: relative;
+    height: calc(100vh - 276px);
+    margin-top: 276px;
+    padding: 10px 12px;
+    padding-bottom: 60px;
+    background-color: var(--blue-100);
+    overflow-y: scroll;
+    overscroll-behavior-y: contain;
+    overflow-x: hidden;
+}
+
+.current-song {
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    max-width: 480px;
+    width: 100%;
+    // background-color: rgba(0, 0, 0, 0.3);
+    background-color: var(--blue-600);
+    z-index: 1;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.thumbnail {
+    width: 45px;
+    height: 45px;
+    margin: 0 10px;
+    flex-shrink: 0;
+}
+
+@keyframes name {
+    0% {
+        transform: translateX(350px);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.body {
+    position: absolute;
+    left: 65px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    color: var(--white-color);
+    overflow: hidden;
+    z-index: -1;
+    min-width: 400px;
+
+    .name {
+        display: block;
+        animation: name 10s linear infinite;
+        font-size: 1.5rem;
+    }
+}
+
+.option {
+    background-color: var(--blue-600);
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    .close {
+        margin-top: 4px;
+        padding: 8px;
+        padding-right: 16px;
+        font-size: 1.8rem;
+        color: var(--white-color);
+        cursor: pointer;
+    }
+}

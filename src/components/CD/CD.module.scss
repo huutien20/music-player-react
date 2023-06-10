@@ -1,0 +1,43 @@
+/* CD */
+.cd {
+    position: relative;
+    display: flex;
+    align-items: center;
+    opacity: 0.9;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    // &::after {
+    //     position: absolute;
+    //     content: '';
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%);
+    //     height: 30%;
+    //     width: 30%;
+    //     border-radius: 50%;
+    //     background-color: var(--blue-100);
+    //     box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.4);
+    // }
+}
+
+.cd-thumb {
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 50%;
+    background-color: #333;
+    background-size: cover;
+    margin: auto;
+}
+
+@keyframes spinner {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.cd-thumb.playing {
+    animation: spinner 10s linear infinite;
+}

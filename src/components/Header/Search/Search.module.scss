@@ -1,0 +1,112 @@
+.wrapper {
+    position: relative;
+    flex: 1;
+    height: 40px;
+}
+
+.search {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: var(--blue-600);
+}
+
+.wrap-icon {
+    padding: 10px 8px 7px;
+
+    .icon {
+        font-size: 1.6rem;
+        color: var(--white-color);
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.search-input {
+    height: 100%;
+    width: 100%;
+    padding: 7px 8px 9px;
+    border: none;
+    font-size: 1.5rem;
+    background-color: transparent;
+    color: var(--white-color);
+    // caret-color: var(--blue-600);
+}
+
+.search-result {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: var(--blue-100);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: 0.5 linear;
+    z-index: 1;
+
+    .result-title {
+        margin: 18px 0;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 300;
+        color: var(--black-color);
+    }
+
+    .result-list {
+        display: flex;
+        flex-direction: column;
+        padding: 8px;
+        background-color: var(--blue-100);
+        max-height: min((100vh - 96px) - 60px, 734px);
+        min-height: 46px;
+        overflow-y: scroll;
+        overscroll-behavior-y: contain;
+        padding-bottom: 10px;
+        overflow-x: hidden;
+    }
+}
+
+.header-result {
+    display: flex;
+    align-items: center;
+    height: 56px;
+    width: 100%;
+
+    .back-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        margin: 0 10px;
+        background-color: var(--white-color);
+        box-shadow: var(--shadow-btn);
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        .back-icon {
+            color: var(--blue-600);
+            font-size: 2rem;
+        }
+    }
+
+    .wrap-input {
+        background-color: var(--blue-500);
+        border-radius: 10px;
+        flex: 1;
+        height: 40px;
+        margin-right: 10px;
+    }
+}

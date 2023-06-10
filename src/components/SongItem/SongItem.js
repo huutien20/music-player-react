@@ -42,16 +42,10 @@ function SongItem({ song, isSearch }) {
             }
         } else {
             if (songNode) {
-                if (isFavorite) {
-                    const detailSong = songList.find((s) => s.id === song.id);
-                    setCurrentSong(detailSong);
-                    setIsPlaying(true);
-                    navigate(`dashboard/${song.id}`);
-                } else {
-                    setCurrentSong(song);
-                    setIsPlaying(true);
-                    navigate(`dashboard/${song.id}`);
-                }
+                const detailSong = isFavorite ? songList.find((s) => s.id === song.id) : song;
+                setCurrentSong(detailSong);
+                setIsPlaying(true);
+                navigate(`dashboard/${song.id}`);
             }
         }
     };
@@ -66,6 +60,17 @@ function SongItem({ song, isSearch }) {
             }, 500);
         }
     }, [currentSong.id]);
+    useEffect(() => {
+        const songActive = document.querySelector(`.${cx('song')}.${cx('active')}`);
+        if (songActive && currentSong) {
+            setTimeout(() => {
+                songActive.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                });
+            }, 500);
+        }
+    }, [currentSong]);
     return (
         <div
             className={cx('song', {

@@ -63,7 +63,7 @@ function SongItem({ song, isSearch }) {
             className={cx('song', {
                 active: song.id === currentSong.id,
             })}
-            onClick={(e) => handleSongClick(e.target, song)}
+            onClick={(e) => handleSongClick(e, song)}
         >
             <div className={cx('thumb')} style={{ backgroundImage: `url(${song.thumbnail})` }}></div>
             <div className={cx('body')}>

@@ -1,0 +1,75 @@
+@import 'normalize.css';
+
+:root {
+    --black-color: #000;
+    --white-color: #fff;
+    --blue-100: #caf0f8;
+    --blue-200: #ade8f4;
+    --blue-300: #90e0ef;
+    --blue-400: #48cae4;
+    --blue-500: #00b4d8;
+    --blue-600: #0096c7;
+    --blue-700: #0077b6;
+    --blue-800: #023e8a;
+    --blue-900: #03045e;
+    --shadow-btn: inset 5px 5px 10px #d9d9d9, inset -5px -5px 10px #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizeSpeed;
+    background-color: #fff;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--blue-100);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--blue-500);
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//     background: var(--blue-500);
+// }
+
+button,
+input,
+[tabindex] {
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    border: none;
+}
+
+a[href] {
+    text-decoration: none;
+}
+
+//css
+
+.App {
+    position: relative;
+    max-width: 480px;
+    margin: 0 auto;
+}

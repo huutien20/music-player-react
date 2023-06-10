@@ -1,0 +1,134 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 16px 14px;
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    background-color: var(--blue-100);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    height: 56px;
+
+    .title {
+        color: var(--primary-text);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        text-align: center;
+    }
+
+    .wrap-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background-color: var(--white-color);
+        box-shadow: var(--shadow-btn);
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        .icon {
+            color: var(--blue-600);
+            font-size: 2rem;
+        }
+    }
+}
+
+.cd {
+    align-self: center;
+    width: 250px;
+    margin-bottom: 30px;
+}
+
+.current-song {
+    text-align: center;
+
+    h2 {
+        color: var(--primary-text);
+        font-size: 20px;
+    }
+    h4 {
+        color: var(--secondary-text);
+        font-size: 12px;
+    }
+}
+
+.other {
+    display: flex;
+    justify-content: space-between;
+    color: #8b8b8b;
+    margin: 60px 8px 20px;
+
+    .btn:hover {
+        cursor: pointer;
+    }
+
+    .btn.active,
+    .btn.active {
+        color: var(--blue-600);
+    }
+}
+
+.control {
+    position: relative;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 80px;
+
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: #8b8b8b;
+        background: linear-gradient(to right bottom, var(--blue-100), var(--blue-300));
+        box-shadow: 1px 1px 4px #999, -1px -1px 4px #e9f8fc, inset 1px 1px 4px var(--blue-300),
+            inset -1px -1px 4px var(--blue-100);
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .btn-toggle-play {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background-color: var(--blue-600);
+        color: var(--white-color);
+        box-shadow: inset 2px 2px 10px var(--blue-700), inset -2px -2px 10px var(--blue-300);
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &::after {
+            position: absolute;
+            z-index: 1;
+            content: '';
+            width: 97%;
+            height: 97%;
+            border-radius: 50%;
+            background-color: transparent;
+            border: 3px solid var(--blue-500);
+        }
+    }
+}

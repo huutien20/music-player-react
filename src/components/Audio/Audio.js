@@ -1,20 +1,9 @@
-import axios from 'axios';
-import { forwardRef, useCallback, useContext, useEffect, useState } from 'react';
-import { AppContext } from '~/AppContext/AppContext';
+import { forwardRef, useCallback, useEffect } from 'react';
+import { useAppContext, useProgressContext } from '~/AppContext/hooks';
 
 const Audio = forwardRef((props, ref) => {
-    console.log('audio');
-
-    const context = useContext(AppContext);
-    const { isPlaying, isRandom, songList, currentSong, isRepeat, setIsPlaying, setCurrentSong, setProgressPercent } =
-        context;
-
-    // const [urlAudio, setUrlAudio] = useState();
-
-    // console.log(urlAudio);
-    // useEffect(() => {
-    //     ref.current.play();
-    // }, [urlAudio, ref]);
+    const { isPlaying, isRandom, songList, currentSong, isRepeat, setIsPlaying, setCurrentSong } = useAppContext();
+    const { setProgressPercent } = useProgressContext();
 
     useEffect(() => {
         const audio = ref.current;
@@ -36,15 +25,6 @@ const Audio = forwardRef((props, ref) => {
             if (e.keyCode === 37) {
                 audio.currentTime -= 5;
             }
-            // if (e.keyCode === 32) {
-            //     e.preventDefault();
-            //     setIsPlaying(!isPlaying);
-            //     if (isPlaying) {
-            //         audio.pause();
-            //     } else {
-            //         audio.play();
-            //     }
-            // }
         };
 
         document.addEventListener('keydown', handleKeyDown);
@@ -87,23 +67,6 @@ const Audio = forwardRef((props, ref) => {
                     ref.current.play();
                 } else handleNextSong();
             }}
-            // onError={() => {
-            //     setIsPlaying(false);
-            //     axios
-            //         .get(`https://api-zingmp3-vercel.vercel.app/api/song`, {
-            //             params: {
-            //                 id: currentSong.id,
-            //             },
-            //         })
-            //         .then((res) => {
-            //             const data = res.data.data;
-            //             if (data) {
-            //                 setUrlAudio(data[128]);
-            //                 setCurrentSong({ ...currentSong, url: data[128] });
-            //             }
-            //         });
-            // }}
-            // onCanPlayThrough={() => setIsPlaying(true)}
         ></audio>
     );
 });

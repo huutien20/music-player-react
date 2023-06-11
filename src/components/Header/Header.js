@@ -2,22 +2,19 @@ import classNames from 'classnames/bind';
 import { FaArrowLeft, FaBars, FaHeart } from 'react-icons/fa';
 
 import styles from './Header.module.scss';
-import images from '~/assets/images/images';
-import { useContext } from 'react';
-import { AppContext } from '~/AppContext/AppContext';
-import Search from './Search/Search';
+import { Search } from './Search';
+import { images } from '~/assets/images';
+import { useAppContext } from '~/AppContext/hooks';
 
 const cx = classNames.bind(styles);
 
 function Header() {
-    console.log('header');
-    const context = useContext(AppContext);
-    const { songList, isFavorite, setIsFavorite } = context;
+    const { songList, isFavorite, setIsFavorite } = useAppContext();
     return (
         <header className={cx('wrapper')}>
             <div className={cx('header')}>
                 <div
-                    className={cx('wrap-icon')}
+                    className={cx('btn', 'favorite-btn')}
                     onClick={() => {
                         setIsFavorite(!isFavorite);
                     }}
@@ -25,9 +22,9 @@ function Header() {
                     {isFavorite ? <FaArrowLeft className={cx('icon')} /> : <FaHeart className={cx('icon')} />}
                 </div>
 
-                <Search songList={songList} />
+                <Search />
 
-                <div className={cx('wrap-icon')}>
+                <div className={cx('btn', 'bars-btn')}>
                     <FaBars className={cx('icon')} />
                 </div>
             </div>

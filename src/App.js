@@ -1,24 +1,21 @@
 import classNames from 'classnames/bind';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useRef } from 'react';
 
 import styles from './App.module.scss';
-import Dashboard from './pages/Dashboard/Dashboard';
-import Home from './pages/Home/Home';
-import { useCallback, useRef } from 'react';
-import Audio from './components/Audio/Audio';
+import { Home, Dashboard } from '~/pages';
+import { Audio } from '~/components';
 
 const cx = classNames.bind(styles);
 
 function App() {
-    console.log('app');
-
     const audioRef = useRef();
 
-    const handleProgressChange = useCallback((e) => {
+    const handleProgressChange = (e) => {
         const audio = audioRef.current;
         const seekTime = (audio.duration / 100) * e.target.value;
         audio.currentTime = seekTime;
-    }, []);
+    };
 
     const getTime = () => {
         const audio = audioRef.current;

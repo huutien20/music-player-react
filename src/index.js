@@ -2,15 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { AppProvider } from './AppContext/AppContext';
+import { AppProvider, ProgressProvider } from '~/AppContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    // <React.StrictMode>
-    <AppProvider>
-        <App />
-    </AppProvider>,
-    // </React.StrictMode>
+    <React.StrictMode>
+        <AppProvider>
+            <ProgressProvider>
+                <App />
+            </ProgressProvider>
+        </AppProvider>
+    </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

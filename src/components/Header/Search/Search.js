@@ -1,13 +1,15 @@
-import classNames from 'classnames/bind';
-import styles from './Search.module.scss';
+import { useEffect, useRef, useState } from 'react';
 import { FaArrowLeft, FaSearch } from 'react-icons/fa';
-import { memo, useEffect, useRef, useState } from 'react';
-import SongItem from '~/components/SongItem/SongItem';
+import classNames from 'classnames/bind';
+
+import styles from './Search.module.scss';
+import { SongItem } from '~/components';
+import { useAppContext } from '~/AppContext/hooks';
 
 const cx = classNames.bind(styles);
 
-function Search({ songList }) {
-    console.log('search');
+function Search() {
+    const { songList } = useAppContext();
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [isFocus, setIsFocus] = useState(false);
@@ -106,4 +108,4 @@ function Search({ songList }) {
     );
 }
 
-export default memo(Search);
+export default Search;

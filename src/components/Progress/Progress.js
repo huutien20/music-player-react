@@ -1,14 +1,16 @@
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Progress.module.scss';
-import { memo, useEffect, useState } from 'react';
+import { useProgressContext } from '~/AppContext/hooks';
 
 const cx = classNames.bind(styles);
 
-const Progress = ({ handleProgressChange, progressPercent, getTime }) => {
-    console.log('progress');
+const Progress = ({ handleProgressChange, getTime }) => {
     const [currTime, minuteSong, secondSong] = getTime();
     const [minute, setMinute] = useState('00');
     const [second, setSecond] = useState('00');
+    const { progressPercent } = useProgressContext();
+
     useEffect(() => {
         setTimeout(() => {
             const minuteSong = Math.floor(currTime / 60);
@@ -32,7 +34,6 @@ const Progress = ({ handleProgressChange, progressPercent, getTime }) => {
             />
             <div style={{ width: `${progressPercent}%` }} className={cx('progress-value')}></div>
             <div className={cx('time')}>
-                {/* <p>{`0${minute}:${second < 10 ? `0${second}` : second}`}</p> */}
                 <p>{`${minute}:${second}`}</p>
                 <p>{`0${minuteSong ? minuteSong : '0'}:${
                     secondSong < 10 ? `0${secondSong}` : secondSong ? secondSong : '00'
@@ -42,4 +43,4 @@ const Progress = ({ handleProgressChange, progressPercent, getTime }) => {
     );
 };
 
-export default memo(Progress);
+export default Progress;

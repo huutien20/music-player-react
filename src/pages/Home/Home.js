@@ -1,24 +1,20 @@
-import classNames from 'classnames/bind';
-import styles from './Home.module.scss';
-import Header from '~/components/Header/Header';
-import { useContext, useEffect } from 'react';
-import { AppContext } from '~/AppContext/AppContext';
-import axios from 'axios';
-import Control from '~/components/Control/Control';
-import CD from '~/components/CD/CD';
-import { FaTimes } from 'react-icons/fa';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import SongItem from '~/components/SongItem/SongItem';
+import axios from 'axios';
+import { FaPause, FaPlay, FaTimes } from 'react-icons/fa';
+import classNames from 'classnames/bind';
+
+import styles from './Home.module.scss';
+import { Header, CD, SongItem } from '~/components';
+import { useAppContext } from '~/AppContext/hooks';
 
 const cx = classNames.bind(styles);
 
 function Home() {
-    console.log('home');
     const navigate = useNavigate();
-    const context = useContext(AppContext);
-    const { songList, currentSong, isPlaying, setIsPlaying, setSongList, setCurrentSong, isFavorite } = context;
+    const { songList, currentSong, isPlaying, setIsPlaying, setSongList, setCurrentSong, isFavorite } = useAppContext();
 
-    // getSongList
+    // Load Song List
     useEffect(() => {
         const loadSongList = async () => {
             let songList = [];
@@ -96,6 +92,7 @@ function Home() {
         loadSongList();
     }, [isFavorite, setSongList]);
 
+    // Remove Song List In Local Storage
     useEffect(() => {
         const removeLocalStorage = () => {
             localStorage.removeItem('songList');
@@ -107,6 +104,17 @@ function Home() {
         };
     }, []);
 
+    const handleClickDashboardSong = (e) => {
+        if (!e.target.closest(`.${cx('option')}`)) {
+            navigate(`/dashboard/${currentSong.id}`);
+        }
+    };
+
+    const handleClickCloseBtn = () => {
+        setCurrentSong({});
+        setIsPlaying(false);
+    };
+
     return (
         <>
             <Header />
@@ -114,30 +122,23 @@ function Home() {
             <div className={cx('playlist')}>
                 {songList.length > 0 && songList.map((song) => <SongItem key={song.id} song={song} />)}
             </div>
+
             {currentSong.id && (
-                <div
-                    className={cx('current-song')}
-                    onClick={(e) => {
-                        if (!e.target.closest(`.${cx('option')}`)) {
-                            navigate(`/dashboard/${currentSong.id}`);
-                        }
-                    }}
-                >
+                <div className={cx('dashboard-current-song')} onClick={handleClickDashboardSong}>
                     <div className={cx('thumbnail')}>
                         <CD thumbnailM={currentSong.thumbnailM} isPlaying={isPlaying} />
                     </div>
+
                     <div className={cx('body')}>
                         <h4 className={cx('name')}>{`${currentSong.name} (${currentSong.artistsNames})`}</h4>
                     </div>
+
                     <div className={cx('option')}>
-                        <Control hideRandom={true} hideRepeat={true} hideNext={true} hidePrev={true} />
-                        <div
-                            className={cx('close')}
-                            onClick={() => {
-                                setCurrentSong({});
-                                setIsPlaying(false);
-                            }}
-                        >
+                        <div className={cx('toggle-play-btn')} onClick={() => setIsPlaying((prev) => !prev)}>
+                            {isPlaying ? <FaPause /> : <FaPlay />}
+                        </div>
+
+                        <div className={cx('close-btn')} onClick={handleClickCloseBtn}>
                             <FaTimes />
                         </div>
                     </div>

@@ -1,16 +1,17 @@
+// PLAY LIST
 .playlist {
     position: relative;
     height: calc(100vh - 276px);
     margin-top: 276px;
-    padding: 10px 12px;
-    padding-bottom: 60px;
+    padding: 10px 12px 60px;
     background-color: var(--blue-100);
     overflow-y: scroll;
     overscroll-behavior-y: contain;
     overflow-x: hidden;
 }
 
-.current-song {
+// DASHBOARD CURRENT SONG
+.dashboard-current-song {
     position: fixed;
     bottom: 0;
     display: flex;
@@ -19,9 +20,9 @@
     height: 60px;
     max-width: 480px;
     width: 100%;
-    // background-color: rgba(0, 0, 0, 0.3);
     background-color: var(--blue-600);
     z-index: 1;
+
     &:hover {
         cursor: pointer;
     }
@@ -34,7 +35,7 @@
     flex-shrink: 0;
 }
 
-@keyframes name {
+@keyframes moveLeft {
     0% {
         transform: translateX(350px);
     }
@@ -49,28 +50,40 @@
     display: flex;
     align-items: center;
     height: 100%;
-    color: var(--white-color);
-    overflow: hidden;
-    z-index: -1;
     min-width: 400px;
+    overflow: hidden;
+    color: var(--white-color);
+    z-index: -1;
 
     .name {
         display: block;
-        animation: name 10s linear infinite;
+        animation: moveLeft 10s linear infinite;
         font-size: 1.5rem;
     }
 }
 
 .option {
-    background-color: var(--blue-600);
     display: flex;
     align-items: center;
     height: 100%;
+    padding: 0 10px;
+    background-color: var(--blue-600);
 
-    .close {
+    .toggle-play-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        border-radius: 50%;
+        background-color: var(--white-color);
+        color: var(--blue-600);
+    }
+
+    .close-btn {
         margin-top: 4px;
         padding: 8px;
-        padding-right: 16px;
         font-size: 1.8rem;
         color: var(--white-color);
         cursor: pointer;

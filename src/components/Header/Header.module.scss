@@ -40,20 +40,18 @@
     }
 }
 
-.wrap-icon {
+.btn {
     display: flex;
     align-items: center;
     justify-content: center;
+
     height: 40px;
     width: 40px;
+    margin: 0 10px;
     border-radius: 50%;
     background-color: #f4a8c4;
-    margin: 0 10px;
     box-shadow: var(--shadow-btn);
-
     background: var(--white-color);
-    // box-shadow: 3px 3px 10px #f0c8d7, -3px -3px 10px #f0c8d7;
-    // box-shadow: 5px 5px 10px var(--blue-400), -5px -5px 10px var(--blue-100);
 
     &:hover {
         cursor: pointer;

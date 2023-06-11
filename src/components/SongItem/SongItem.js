@@ -1,28 +1,25 @@
-import classNames from 'classnames/bind';
-import styles from './SongItem.module.scss';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '~/AppContext/AppContext';
+import classNames from 'classnames/bind';
+
+import styles from './SongItem.module.scss';
+import { useAppContext } from '~/AppContext/hooks';
 
 const cx = classNames.bind(styles);
 
 function SongItem({ song, isSearch }) {
-    console.log(song);
-    console.log('song item');
     const [isFavoriteSong, setIsFavoriteSong] = useState(song.isFavorite);
+    const { songList, currentSong, setCurrentSong, setIsPlaying, isFavorite } = useAppContext();
 
-    const navigate = useNavigate();
-    const context = useContext(AppContext);
-    const { songList, currentSong, setCurrentSong, setIsPlaying, isFavorite } = context;
     const songRef = useRef();
+    const navigate = useNavigate();
 
     const handleSongClick = (e, song) => {
         const isOptionClicked = e.target.closest(`.${cx('option')}`);
         const isSongActive = songRef.current.classList.contains(cx('active'));
 
         if (isOptionClicked) {
-            console.log('set favorite');
             setIsFavoriteSong((prev) => !prev);
             const favoriteSongList = JSON.parse(localStorage.getItem('favoriteList')) || [];
 

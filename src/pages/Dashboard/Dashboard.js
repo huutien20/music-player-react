@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Dashboard.module.scss';
-import CD from '~/components/CD/CD';
-import Progress from '~/components/Progress/Progress';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { AppContext } from '~/AppContext/AppContext';
+import { useNavigate } from 'react-router-dom';
+
+import { ImLoop } from 'react-icons/im';
+import { FiDownload } from 'react-icons/fi';
 import {
     FaArrowLeft,
     FaBars,
@@ -15,20 +15,17 @@ import {
     FaStepBackward,
     FaStepForward,
 } from 'react-icons/fa';
-import { ImLoop } from 'react-icons/im';
-import { FiDownload } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
+
+import styles from './Dashboard.module.scss';
+import { CD, Progress } from '~/components';
+import { useAppContext } from '~/AppContext/hooks';
 
 const cx = classNames.bind(styles);
 
 function Dashboard({ handleProgressChange, getTime }) {
-    console.log('dashboard');
-
-    const context = useContext(AppContext);
     const {
         songList,
         currentSong,
-        progressPercent,
         isPlaying,
         isRandom,
         isRepeat,
@@ -36,12 +33,12 @@ function Dashboard({ handleProgressChange, getTime }) {
         setIsPlaying,
         setIsRandom,
         setIsRepeat,
-    } = context;
+    } = useAppContext();
+
     const [isFavoriteSong, setIsFavoriteSong] = useState(currentSong.isFavorite);
-
     const navigate = useNavigate();
-    const cdRef = useRef();
 
+    // Press Space Toggle Play/Pause
     useEffect(() => {
         const handleKeyDownSpace = (e) => {
             if (e.keyCode === 32) {
@@ -136,26 +133,30 @@ function Dashboard({ handleProgressChange, getTime }) {
         <div className={cx('dashboard')}>
             <div className={cx('header')}>
                 <div
-                    className={cx('wrap-icon')}
+                    className={cx('btn', 'back-icon')}
                     onClick={() => {
                         navigate('/');
                     }}
                 >
                     <FaArrowLeft className={cx('icon')} />
                 </div>
+
                 <h3 className={cx('title')}>Now Playing</h3>
 
-                <div className={cx('wrap-icon')}>
+                <div className={cx('btn', 'bars-icon')}>
                     <FaBars className={cx('icon')} />
                 </div>
             </div>
+
             <div className={cx('cd')}>
-                <CD ref={cdRef} thumbnailM={currentSong.thumbnailM} isPlaying={isPlaying} />
+                <CD thumbnailM={currentSong.thumbnailM} isPlaying={isPlaying} />
             </div>
+
             <div className={cx('current-song')}>
                 <h2>{currentSong.name}</h2>
                 <h4>{currentSong.artistsNames}</h4>
             </div>
+
             <div className={cx('other')}>
                 <div className={cx('wrap')}>
                     <div className={cx('btn')} onClick={handleClickHeart}>
@@ -169,6 +170,7 @@ function Dashboard({ handleProgressChange, getTime }) {
                         <FiDownload className={cx('download-icon')} />
                     </div>
                 </div>
+
                 <div className={cx('wrap')}>
                     <div
                         className={cx('btn', {
@@ -189,7 +191,8 @@ function Dashboard({ handleProgressChange, getTime }) {
                     </div>
                 </div>
             </div>
-            <Progress handleProgressChange={handleProgressChange} progressPercent={progressPercent} getTime={getTime} />
+
+            <Progress handleProgressChange={handleProgressChange} getTime={getTime} />
 
             <div className={cx('control')}>
                 <div className={cx('btn', 'btn-prev')} onClick={handlePrevSong}>

@@ -68,15 +68,27 @@
     color: #8b8b8b;
     margin: 60px 8px 20px;
 
-    .heart-btn:hover,
+    .wrap {
+        display: flex;
+    }
+
+    .btn ~ .btn {
+        margin-left: 20px;
+    }
+
     .btn:hover {
         cursor: pointer;
     }
 
-    .heart-btn,
+    .heart-icon,
+    .download-icon,
     .btn.active,
     .btn.active {
         color: var(--blue-600);
+    }
+
+    .download-icon {
+        font-size: 1.8rem;
     }
 }
 

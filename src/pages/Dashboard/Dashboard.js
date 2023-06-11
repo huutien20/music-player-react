@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Dashboard.module.scss';
 import CD from '~/components/CD/CD';
 import Progress from '~/components/Progress/Progress';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext } from '~/AppContext/AppContext';
 import {
     FaArrowLeft,
@@ -15,9 +15,9 @@ import {
     FaStepBackward,
     FaStepForward,
 } from 'react-icons/fa';
+import { ImLoop } from 'react-icons/im';
+import { FiDownload } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRepeat } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -41,6 +41,21 @@ function Dashboard({ handleProgressChange, getTime }) {
 
     const navigate = useNavigate();
     const cdRef = useRef();
+
+    useEffect(() => {
+        const handleKeyDownSpace = (e) => {
+            if (e.keyCode === 32) {
+                e.preventDefault();
+                setIsPlaying((prev) => !prev);
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDownSpace);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDownSpace);
+        };
+    }, [setIsPlaying]);
 
     const handleNextSong = () => {
         if (isRandom) {
@@ -95,6 +110,28 @@ function Dashboard({ handleProgressChange, getTime }) {
         }
     };
 
+    const handleClickDownload = () => {
+        fetch(currentSong.url)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Lỗi khi tải xuống bài hát.');
+                }
+                return response.blob();
+            })
+            .then((blob) => {
+                const downloadLink = document.createElement('a');
+                downloadLink.href = URL.createObjectURL(blob);
+                downloadLink.download = currentSong.name;
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     return (
         <div className={cx('dashboard')}>
             <div className={cx('header')}>
@@ -120,28 +157,36 @@ function Dashboard({ handleProgressChange, getTime }) {
                 <h4>{currentSong.artistsNames}</h4>
             </div>
             <div className={cx('other')}>
-                <div
-                    className={cx('btn', {
-                        active: isRepeat,
-                    })}
-                    onClick={() => setIsRepeat(!isRepeat)}
-                >
-                    <FontAwesomeIcon icon={faRepeat} />
+                <div className={cx('wrap')}>
+                    <div className={cx('btn')} onClick={handleClickHeart}>
+                        {isFavoriteSong ? (
+                            <FaHeart className={cx('heart-icon')} />
+                        ) : (
+                            <FaRegHeart className={cx('heart-icon')} />
+                        )}
+                    </div>
+                    <div className={cx('btn', 'download-btn')} onClick={handleClickDownload}>
+                        <FiDownload className={cx('download-icon')} />
+                    </div>
                 </div>
-                <div className={cx('heart-btn')} onClick={handleClickHeart}>
-                    {isFavoriteSong ? (
-                        <FaHeart className={cx('heart-active-icon')} />
-                    ) : (
-                        <FaRegHeart className={cx('heart-icon')} />
-                    )}
-                </div>
-                <div
-                    className={cx('btn', {
-                        active: isRandom,
-                    })}
-                    onClick={() => setIsRandom(!isRandom)}
-                >
-                    <FaRandom />
+                <div className={cx('wrap')}>
+                    <div
+                        className={cx('btn', {
+                            active: isRepeat,
+                        })}
+                        onClick={() => setIsRepeat(!isRepeat)}
+                    >
+                        <ImLoop className={cx('repeat-icon')} />
+                    </div>
+
+                    <div
+                        className={cx('btn', {
+                            active: isRandom,
+                        })}
+                        onClick={() => setIsRandom(!isRandom)}
+                    >
+                        <FaRandom className={cx('random-icon')} />
+                    </div>
                 </div>
             </div>
             <Progress handleProgressChange={handleProgressChange} progressPercent={progressPercent} getTime={getTime} />

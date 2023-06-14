@@ -8,6 +8,11 @@
     overflow-y: scroll;
     overscroll-behavior-y: contain;
     overflow-x: hidden;
+
+    .loading {
+        text-align: center;
+        font-size: 1.6rem;
+    }
 }
 
 // DASHBOARD CURRENT SONG

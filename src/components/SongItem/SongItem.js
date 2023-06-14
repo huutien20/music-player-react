@@ -26,10 +26,12 @@ function SongItem({ song, isSearch }) {
             const isSongInFavoriteList = favoriteSongList.some((favoriteSong) => favoriteSong.id === song.id);
 
             if (isSongInFavoriteList) {
+                if (isSongActive) currentSong.isFavorite = false;
                 songList[song.index].isFavorite = false;
                 const updatedFavoriteList = favoriteSongList.filter((favoriteSong) => favoriteSong.id !== song.id);
                 localStorage.setItem('favoriteList', JSON.stringify(updatedFavoriteList));
             } else {
+                if (isSongActive) currentSong.isFavorite = true;
                 songList[song.index].isFavorite = true;
                 favoriteSongList.push(song);
                 localStorage.setItem('favoriteList', JSON.stringify(favoriteSongList));

@@ -32,7 +32,7 @@ function Header() {
             <div className={cx('banner')}>
                 <img src={images.banner} alt="banner" />
                 <h4 className={cx('title')}>{isFavorite ? 'Danh Sách Bài Hát Yêu Thích' : 'Top 100 Nhạc Trẻ'}</h4>
-                <p>{`${songList.length ? songList.length : '0'} bài hát ${
+                <p>{`${songList.length > 0 ? songList.length : '0'} bài hát ${
                     isFavorite ? 'yêu thích' : '- bởi Zing MP3'
                 }`}</p>
             </div>

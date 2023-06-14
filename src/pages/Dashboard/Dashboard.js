@@ -36,6 +36,7 @@ function Dashboard({ handleProgressChange, getTime }) {
     } = useAppContext();
 
     const [isFavoriteSong, setIsFavoriteSong] = useState(currentSong.isFavorite);
+
     const navigate = useNavigate();
 
     // Press Space Toggle Play/Pause
@@ -98,10 +99,12 @@ function Dashboard({ handleProgressChange, getTime }) {
 
         if (isSongInFavoriteList) {
             songList[currentSong.index].isFavorite = false;
+            currentSong.isFavorite = false;
             const updatedFavoriteList = favoriteSongList.filter((favoriteSong) => favoriteSong.id !== currentSong.id);
             localStorage.setItem('favoriteList', JSON.stringify(updatedFavoriteList));
         } else {
             songList[currentSong.index].isFavorite = true;
+            currentSong.isFavorite = true;
             favoriteSongList.push(currentSong);
             localStorage.setItem('favoriteList', JSON.stringify(favoriteSongList));
         }
@@ -176,7 +179,10 @@ function Dashboard({ handleProgressChange, getTime }) {
                         className={cx('btn', {
                             active: isRepeat,
                         })}
-                        onClick={() => setIsRepeat(!isRepeat)}
+                        onClick={() => {
+                            if (isRandom && !isRepeat) setIsRandom(false);
+                            setIsRepeat(!isRepeat);
+                        }}
                     >
                         <ImLoop className={cx('repeat-icon')} />
                     </div>
@@ -185,7 +191,10 @@ function Dashboard({ handleProgressChange, getTime }) {
                         className={cx('btn', {
                             active: isRandom,
                         })}
-                        onClick={() => setIsRandom(!isRandom)}
+                        onClick={() => {
+                            if (isRepeat && !isRandom) setIsRepeat(false);
+                            setIsRandom(!isRandom);
+                        }}
                     >
                         <FaRandom className={cx('random-icon')} />
                     </div>

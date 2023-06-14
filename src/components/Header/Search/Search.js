@@ -19,17 +19,12 @@ function Search() {
 
     useEffect(() => {
         if (!!searchValue.trim()) {
-            var result = [];
-
-            songList.forEach((song) => {
-                const value = searchValue.trim().toLowerCase();
-                const matchName = song.name.toLowerCase().match(value);
-                const matchArtistsNames = song.artistsNames.toLowerCase().match(value);
-                if (matchName || matchArtistsNames) {
-                    result.push(song);
-                }
+            const value = searchValue.trim().toLowerCase();
+            const result = songList.filter((song) => {
+                const nameSong = song.name.toLowerCase();
+                const artistsNames = song.artistsNames.toLowerCase();
+                return nameSong.includes(value) || artistsNames.includes(value);
             });
-
             setSearchResult(result);
         } else {
             setSearchResult([]);

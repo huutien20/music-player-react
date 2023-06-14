@@ -120,7 +120,9 @@ function Home() {
             <Header />
 
             <div className={cx('playlist')}>
-                {songList.length > 0 && songList.map((song) => <SongItem key={song.id} song={song} />)}
+                {songList.length > 0
+                    ? songList.map((song) => <SongItem key={song.id} song={song} />)
+                    : !isFavorite && <div className={cx('loading')}>Đang tải danh sách bài hát...</div>}
             </div>
 
             {currentSong.id && (

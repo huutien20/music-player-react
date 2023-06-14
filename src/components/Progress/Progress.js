@@ -12,13 +12,17 @@ const Progress = ({ handleProgressChange, getTime }) => {
     const { progressPercent } = useProgressContext();
 
     useEffect(() => {
-        setTimeout(() => {
+        const intervalId = setInterval(() => {
             const minuteSong = Math.floor(currTime / 60);
             const secondSong = Math.floor(currTime - minuteSong * 60);
             setMinute(minuteSong.toString().padStart(2, '0'));
             setSecond(secondSong.toString().padStart(2, '0'));
         }, 1000);
-    });
+
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [currTime]);
 
     return (
         <div className={cx('progress-bar')}>

@@ -1,70 +1,21 @@
-# Getting Started with Create React App
+# Mô tả các chức năng của ứng dụng
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Lấy danh sách bài hát từ API
 
-## Available Scripts
-
+API: https://api-zingmp3-vercel.vercel.app/api/charthome
+Ứng dụng sẽ sử dụng API để lấy danh sách các bài hát và thông tin liên quan tới bài hát như: tên bài hát, tên ca sĩ, đường dẫn bài hát, thumbnail,...
 In the project directory, you can run:
 
-### `npm start`
+## Tìm kiếm
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Người dùng có thể tìm kiếm bài hát, ca sĩ bằng cách nhập từ khóa vào ô tìm kiếm. Kết quả tìm kiếm sẽ được hiển thị cho người dùng để họ chọn bài hát nghe.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Thêm bài hát vào danh sách yêu thích
 
-### `npm test`
+Khi người dùng nghe một bài hát mà họ muốn lưu trữ vào danh sách yêu thích, họ có thể nhấp vào biểu tượng "Trái tim". Bài hát sẽ được lưu trữ vào localStorage và người dùng có thể truy cập vào danh sách yêu thích để xem và phát lại bài hát bất kỳ khi muốn.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tải xuống
+Người dùng có thể chọn tải xuống bài hát để lưu trữ và nghe offline. Khi người dùng nhấp vào nút tải xuống, ứng dụng sẽ tải xuống bài hát và lưu trữ nó trong thiết bị của người dùng.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Hiển thị bài hát đang chạy:
+Khi người dùng chọn một bài hát để phát, ứng dụng sẽ hiển thị thông tin về bài hát đang chạy, bao gồm tên bài hát, nghệ sĩ, album và hình ảnh liên quan. Ngoài ra, ứng dụng cũng có thể hiển thị thanh tiến độ phát và các nút điều khiển như phát/tạm dừng, tua nhanh, tua chậm, và điều chỉnh âm lượng.

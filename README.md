@@ -4,7 +4,6 @@
 
 API: https://api-zingmp3-vercel.vercel.app/api/charthome
 Ứng dụng sẽ sử dụng API để lấy danh sách các bài hát và thông tin liên quan tới bài hát như: tên bài hát, tên ca sĩ, đường dẫn bài hát, thumbnail,...
-In the project directory, you can run:
 
 ## Tìm kiếm
 
@@ -18,4 +17,4 @@ Khi người dùng nghe một bài hát mà họ muốn lưu trữ vào danh sá
 Người dùng có thể chọn tải xuống bài hát để lưu trữ và nghe offline. Khi người dùng nhấp vào nút tải xuống, ứng dụng sẽ tải xuống bài hát và lưu trữ nó trong thiết bị của người dùng.
 
 ## Hiển thị bài hát đang chạy:
-Khi người dùng chọn một bài hát để phát, ứng dụng sẽ hiển thị thông tin về bài hát đang chạy, bao gồm tên bài hát, nghệ sĩ, album và hình ảnh liên quan. Ngoài ra, ứng dụng cũng có thể hiển thị thanh tiến độ phát và các nút điều khiển như phát/tạm dừng, tua nhanh, tua chậm, và điều chỉnh âm lượng.
+Khi người dùng chọn một bài hát để phát, ứng dụng sẽ hiển thị thông tin về bài hát đang chạy, bao gồm tên bài hát, ca sĩ và hình ảnh liên quan. Ngoài ra, ứng dụng cũng có thể hiển thị thanh tiến độ phát và các nút điều khiển như phát/tạm dừng, chuyển bài, phát ngẫu nhiên, lặp lại,...
